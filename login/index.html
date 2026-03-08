@@ -1,0 +1,40 @@
+<div id="page-login" class="page" style="padding:0;max-width:100%;">
+  <div class="auth-wrap">
+
+    <!-- LEFT: Info panel -->
+    <div class="auth-left">
+      <h2>Welcome back, Kisan Ji!</h2>
+      <p>Sign in to access crop predictions and farm insights.</p>
+      <ul>
+        <li>Crop Profit Prediction</li>
+        <li>Live Market Prices</li>
+        <li>AI Disease Detection</li>
+        <li>Equipment Network</li>
+      </ul>
+    </div>
+
+    <!-- RIGHT: Login form -->
+    <div class="auth-right">
+      <h2>Sign In</h2>
+      <p>No account? <span class="auth-link" onclick="go('register')">Register free</span></p>
+
+      <label>Email</label>
+      <input type="text" id="l-email" placeholder="farmer@krishi.com" />
+
+      <label>Password</label>
+      <input type="password" id="l-pass" placeholder="Password" />
+
+      <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin:8px 0;">
+        <label><input type="checkbox" /> Remember me</label>
+        <span class="auth-link" onclick="toast('Reset link sent!')">Forgot password?</span>
+      </div>
+
+      <button class="btn btn-green btn-full" onclick="doLogin()">Sign In</button>
+
+      <div class="demo-box">
+        Demo login: <b>farmer@krishi.com</b> / <b>krishi123</b>
+      </div>
+    </div>
+
+  </div>
+</div>

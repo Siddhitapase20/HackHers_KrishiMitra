@@ -1,0 +1,55 @@
+<div id="page-market" class="page">
+  <h1>📊 Smart Market Advisor</h1>
+  <p>Check mandi prices and get sell or wait recommendations.</p>
+
+  <!-- Crop & District selector -->
+  <div class="box">
+    <div class="row2">
+      <div>
+        <label>Crop</label>
+        <select id="mk-crop" onchange="loadMarket()">
+          <option value="wheat">Wheat</option>
+          <option value="rice">Rice</option>
+          <option value="soybean">Soybean</option>
+          <option value="cotton">Cotton</option>
+          <option value="tomato">Tomato</option>
+        </select>
+      </div>
+      <div>
+        <label>District</label>
+        <select id="mk-dist" onchange="loadMarket()">
+          <option>Nashik</option>
+          <option>Pune</option>
+          <option>Nagpur</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sell / Wait Banner (updated by JS) -->
+  <div class="banner" id="mkt-banner">
+    <div>
+      <strong id="mkt-verdict">SELL NOW</strong>
+      <p id="mkt-reason">Price is above average. Sell immediately!</p>
+    </div>
+    <div style="text-align:right;">
+      <small style="opacity:0.7;">Today's Price</small>
+      <div id="mkt-price" style="font-size:1.8rem;font-weight:bold;">Rs.270/q</div>
+    </div>
+  </div>
+
+  <!-- Price Chart (drawn by Chart.js via JS) -->
+  <div class="box">
+    <h2>Weekly Price Trend</h2>
+    <div style="height:220px;"><canvas id="price-chart"></canvas></div>
+  </div>
+
+  <!-- Mandi Table (filled by JS) -->
+  <div class="box">
+    <h2>Nearby Mandis</h2>
+    <table>
+      <tr><th>Mandi</th><th>District</th><th>Price</th><th>Status</th></tr>
+      <tbody id="mandi-table"></tbody>
+    </table>
+  </div>
+</div>
