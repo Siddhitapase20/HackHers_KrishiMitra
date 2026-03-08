@@ -1,0 +1,55 @@
+<div id="page-profile" class="page">
+  <h1>My Profile</h1>
+
+  <div class="two-col">
+
+    <!-- LEFT: Avatar + Farm Info -->
+    <div>
+      <!-- Profile card -->
+      <div class="box" style="text-align:center;">
+        <!-- Avatar initials shown by JS -->
+        <div id="p-avatar"
+             style="width:65px;height:65px;background:#2d6a4f;color:white;border-radius:50%;
+                    display:flex;align-items:center;justify-content:center;
+                    font-size:1.5rem;font-weight:bold;margin:0 auto 10px;">
+          R
+        </div>
+        <h3 id="p-name" style="margin:0;">Ramesh Shinde</h3>
+        <p style="color:#888;margin:3px 0 10px;" id="p-email">farmer@krishi.com</p>
+
+        <!-- Stats row -->
+        <div style="display:flex;justify-content:space-around;border-top:1px solid #eee;padding-top:10px;">
+          <div><b id="p-npred" style="color:#2d6a4f;">0</b><br/><small>Predictions</small></div>
+          <div><b id="p-ndiag" style="color:#2d6a4f;">0</b><br/><small>Diagnoses</small></div>
+          <div><b id="p-ncalc" style="color:#2d6a4f;">0</b><br/><small>Calcs</small></div>
+        </div>
+      </div>
+
+      <!-- Farm info table -->
+      <div class="box" style="margin-top:12px;">
+        <h2>Farm Info</h2>
+        <table>
+          <tr><td>District</td><td id="pi-dist">-</td></tr>
+          <tr><td>Crop</td>    <td id="pi-crop">-</td></tr>
+          <tr><td>Land</td>    <td id="pi-land">-</td></tr>
+          <tr><td>Phone</td>   <td id="pi-phone">-</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- RIGHT: Activity Log (filled by JS) -->
+    <div class="box">
+      <h2>Activity Log</h2>
+      <div id="activity-log">
+        <p style="color:#aaa;">No activity yet. Start using the tools!</p>
+      </div>
+      <!-- Quick action buttons -->
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-green"  onclick="go('predict')">Predict Crop</button>
+        <button class="btn btn-white"  onclick="go('health')">Health Check</button>
+        <button class="btn btn-white"  onclick="go('calc')">Calculator</button>
+      </div>
+    </div>
+
+  </div>
+</div>
