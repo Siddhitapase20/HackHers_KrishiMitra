@@ -1,0 +1,69 @@
+<div id="page-equip" class="page">
+  <h1>🚜 Equipment Sharing</h1>
+  <p>Borrow or lend farm equipment with nearby farmers.</p>
+
+  <!-- Search & Filter Bar -->
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
+    <button class="btn btn-green" onclick="openModal('list-modal')">+ List My Equipment</button>
+    <input type="text" id="eq-search" placeholder="Search equipment..."
+           style="max-width:240px;" oninput="renderEq()" />
+    <select id="eq-filter" onchange="renderEq()" style="max-width:160px;">
+      <option value="all">All Types</option>
+      <option>Tractor</option>
+      <option>Harvester</option>
+      <option>Sprayer</option>
+      <option>Thresher</option>
+    </select>
+  </div>
+
+  <!-- Equipment Cards (filled by JS) -->
+  <div id="eq-grid" class="card-row"></div>
+
+
+  <!-- ===== LIST MODAL ===== -->
+  <div class="modal-bg" id="list-modal">
+    <div class="modal">
+      <button class="close-btn" onclick="closeModal('list-modal')">X</button>
+      <h2>List Your Equipment</h2>
+      <div class="row2">
+        <div>
+          <label>Equipment Type</label>
+          <select id="em-type">
+            <option>Tractor</option><option>Harvester</option>
+            <option>Sprayer</option><option>Thresher</option>
+          </select>
+        </div>
+        <div><label>Your Name</label><input type="text" id="em-name" placeholder="Farmer name" /></div>
+        <div><label>Village / Town</label><input type="text" id="em-loc" placeholder="Location" /></div>
+        <div><label>Rent (Rs./day)</label><input type="number" id="em-rent" placeholder="500" /></div>
+        <div><label>Phone</label><input type="tel" id="em-phone" placeholder="9XXXXXXXXX" /></div>
+        <div>
+          <label>Condition</label>
+          <select id="em-cond">
+            <option>Excellent</option><option>Good</option><option>Fair</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-green btn-full" onclick="listEquip()">Submit Listing</button>
+    </div>
+  </div>
+
+
+  <!-- ===== REQUEST MODAL ===== -->
+  <div class="modal-bg" id="req-modal">
+    <div class="modal">
+      <button class="close-btn" onclick="closeModal('req-modal')">X</button>
+      <h2>Request Equipment</h2>
+      <!-- Equipment name shown here by JS -->
+      <p id="req-item-name" style="color:#2d6a4f;font-weight:bold;"></p>
+      <div class="row2">
+        <div><label>Your Name</label><input type="text" id="rq-name" placeholder="Your name" /></div>
+        <div><label>From Date</label><input type="date" id="rq-date" /></div>
+        <div><label>No. of Days</label><input type="number" id="rq-days" placeholder="3" /></div>
+        <div><label>Your Phone</label><input type="tel" id="rq-phone" placeholder="9XXXXXXXXX" /></div>
+      </div>
+      <button class="btn btn-green btn-full" onclick="sendRequest()">Send Request</button>
+    </div>
+  </div>
+
+</div>

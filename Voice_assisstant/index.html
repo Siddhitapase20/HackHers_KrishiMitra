@@ -1,0 +1,55 @@
+<div id="page-voice" class="page">
+  <h1>🎙️ Voice Assistant</h1>
+  <p>Ask any farming question by voice or text in Hindi, Marathi, or English.</p>
+
+  <div class="two-col">
+
+    <!-- LEFT: Language + Mic + Quick Questions -->
+    <div class="box">
+      <h2>Language</h2>
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <button class="btn btn-green" id="lang-hi" onclick="setLang('hi',this)">Hindi</button>
+        <button class="btn btn-white" id="lang-mr" onclick="setLang('mr',this)">Marathi</button>
+        <button class="btn btn-white" id="lang-en" onclick="setLang('en',this)">English</button>
+      </div>
+
+      <!-- Microphone button -->
+      <div style="text-align:center;margin-bottom:14px;">
+        <button id="orb" class="btn btn-green"
+                style="width:80px;height:80px;border-radius:50%;font-size:1.7rem;padding:0;"
+                onclick="toggleVoice()">🎤</button>
+        <p id="orb-status" style="font-size:0.85rem;color:#555;margin-top:6px;">Tap to speak</p>
+      </div>
+
+      <!-- Quick Question Buttons -->
+      <h3 style="font-size:0.9rem;margin-bottom:8px;">Quick Questions</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+        <button class="btn btn-white" style="font-size:0.78rem;padding:6px;" onclick="qAsk(this)">Which crop to plant?</button>
+        <button class="btn btn-white" style="font-size:0.78rem;padding:6px;" onclick="qAsk(this)">Best time to sell?</button>
+        <button class="btn btn-white" style="font-size:0.78rem;padding:6px;" onclick="qAsk(this)">Disease treatment?</button>
+        <button class="btn btn-white" style="font-size:0.78rem;padding:6px;" onclick="qAsk(this)">Mandi prices today?</button>
+        <button class="btn btn-white" style="font-size:0.78rem;padding:6px;" onclick="qAsk(this)">Fertilizer dosage?</button>
+        <button class="btn btn-white" style="font-size:0.78rem;padding:6px;" onclick="qAsk(this)">Weather forecast?</button>
+      </div>
+    </div>
+
+    <!-- RIGHT: Chat window -->
+    <div class="box">
+      <h2>Chat</h2>
+      <!-- Messages appear here (added by JS) -->
+      <div class="chat-area" id="chat-box">
+        <div class="msg">
+          <span>Bot</span>
+          <div class="bubble">Hello! Ask me anything about farming.</div>
+        </div>
+      </div>
+      <!-- Text input -->
+      <div class="chat-row">
+        <input type="text" id="chat-input" placeholder="Type your question..."
+               onkeydown="if(event.key==='Enter') sendMsg()" />
+        <button class="btn btn-green" onclick="sendMsg()">Send</button>
+      </div>
+    </div>
+
+  </div>
+</div>

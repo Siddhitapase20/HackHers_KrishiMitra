@@ -1,0 +1,42 @@
+<div id="page-register" class="page" style="padding:0;max-width:100%;">
+  <div class="auth-wrap">
+
+    <!-- LEFT: Info panel -->
+    <div class="auth-left" style="background:#1b4332;">
+      <h2>Join 12,000+ Smart Farmers</h2>
+      <p>Create your free account and start making better farming decisions.</p>
+      <ul>
+        <li>100% Free</li>
+        <li>Hindi and Marathi support</li>
+        <li>Your data is private</li>
+      </ul>
+    </div>
+
+    <!-- RIGHT: Registration form -->
+    <div class="auth-right">
+      <h2>Create Account</h2>
+      <p>Already registered? <span class="auth-link" onclick="go('login')">Sign in</span></p>
+
+      <div class="row2">
+        <div><label>First Name</label><input type="text" id="r-fn" placeholder="First name" /></div>
+        <div><label>Last Name</label><input type="text" id="r-ln" placeholder="Last name" /></div>
+        <div><label>Email</label><input type="email" id="r-email" placeholder="your@email.com" /></div>
+        <div><label>Phone</label><input type="tel" id="r-phone" placeholder="9XXXXXXXXX" /></div>
+        <div>
+          <label>District</label>
+          <select id="r-dist">
+            <option value="">Select</option>
+            <option>Nashik</option><option>Pune</option><option>Nagpur</option>
+          </select>
+        </div>
+        <div><label>Land (acres)</label><input type="number" id="r-land" placeholder="5" /></div>
+      </div>
+
+      <label>Password</label>
+      <input type="password" id="r-pass" placeholder="Min. 6 characters" />
+
+      <button class="btn btn-green btn-full" onclick="doRegister()">Create Account</button>
+    </div>
+
+  </div>
+</div>

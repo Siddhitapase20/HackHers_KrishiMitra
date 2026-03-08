@@ -1,0 +1,52 @@
+<div id="page-calc" class="page">
+  <h1>🧮 Farm Profit Calculator</h1>
+  <p>Enter your costs and expected yield to calculate profit or loss.</p>
+
+  <div class="two-col">
+
+    <!-- LEFT: Input costs -->
+    <div class="box">
+      <h2>Input Costs (Rs.)</h2>
+      <table>
+        <tr><td>Seeds</td>       <td><input type="number" id="c1" placeholder="0" oninput="calcP()" /></td></tr>
+        <tr><td>Fertilizers</td> <td><input type="number" id="c2" placeholder="0" oninput="calcP()" /></td></tr>
+        <tr><td>Pesticides</td>  <td><input type="number" id="c3" placeholder="0" oninput="calcP()" /></td></tr>
+        <tr><td>Labour</td>      <td><input type="number" id="c4" placeholder="0" oninput="calcP()" /></td></tr>
+        <tr><td>Irrigation</td>  <td><input type="number" id="c5" placeholder="0" oninput="calcP()" /></td></tr>
+        <tr><td>Machinery</td>   <td><input type="number" id="c6" placeholder="0" oninput="calcP()" /></td></tr>
+      </table>
+
+      <h2 style="margin-top:14px;">Expected Yield</h2>
+      <table>
+        <tr><td>Yield (kg)</td>    <td><input type="number" id="c7" placeholder="0" oninput="calcP()" /></td></tr>
+        <tr><td>Price (Rs./kg)</td><td><input type="number" id="c8" placeholder="0" oninput="calcP()" /></td></tr>
+      </table>
+    </div>
+
+    <!-- RIGHT: Live result (updated by JS as you type) -->
+    <div class="box">
+      <h2>Live Result</h2>
+      <div class="result-line">
+        <span>Total Cost</span>
+        <b id="r-cost" style="color:red;">Rs.0</b>
+      </div>
+      <div class="result-line">
+        <span>Expected Revenue</span>
+        <b id="r-rev" style="color:green;">Rs.0</b>
+      </div>
+      <div class="result-line total">
+        <span id="r-lbl">Profit</span>
+        <b id="r-profit" style="font-size:1.3rem;">Rs.0</b>
+      </div>
+
+      <!-- Advice message filled by JS -->
+      <div id="r-adv" style="margin-top:10px;padding:8px;border-radius:6px;text-align:center;font-size:0.88rem;"></div>
+
+      <!-- Formula -->
+      <div style="background:#1a3a28;color:#95d5b2;padding:10px;border-radius:6px;margin-top:12px;">
+        <b>Formula:</b> Profit = (Yield x Price) - Cost
+      </div>
+    </div>
+
+  </div>
+</div>
