@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KrishiMitra</title>
+
+  <!-- Chart.js for Market page -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+  <!-- Our CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Toast notification -->
+<div id="toast"></div>
+
+<!-- ===== NAVBAR ===== -->
+<nav>
+  <b onclick="go('home')">KrishiMitra</b>
+  <a onclick="go('predict')">Crop AI</a>
+  <a onclick="go('health')">Health</a>
+  <a onclick="go('calc')">Calculator</a>
+  <a onclick="go('market')">Market</a>
+  <a onclick="go('voice')">Voice</a>
+  <a onclick="go('equip')">Equipment</a>
+  <div class="spacer"></div>
+  <!-- Shown when NOT logged in -->
+  <span id="nav-guest">
+    <a onclick="go('login')">Login</a>
+    <button onclick="go('register')">Register</button>
+  </span>
+  <!-- Shown when logged in -->
+  <span id="nav-user" style="display:none">
+    <a onclick="go('profile')" id="nav-name">Farmer</a>
+    <a onclick="logout()">Logout</a>
+  </span>
+</nav>
+
+<!-- ===== ALL PAGES (only one visible at a time via .show class) ===== -->
+
+<!-- Home -->
+<div id="page-home" class="page show" style="padding:0; max-width:100%;">
+  <div class="hero">
+    <h1>KrishiMitra — Smart Farming</h1>
+    <p>AI-powered crop prediction, disease detection and market insights for Indian farmers.</p>
+    <div style="margin-top:16px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+      <button class="btn btn-white" onclick="go('predict')">Predict My Crop</button>
+      <button class="btn" style="background:rgba(255,255,255,0.15);color:white;" onclick="go('health')">Check Crop Health</button>
+    </div>
+    <div class="hero-stats">
+      <div><strong>12K+</strong><span>Farmers</span></div>
+      <div><strong>Rs.2.4L</strong><span>Avg Profit</span></div>
+      <div><strong>98%</strong><span>AI Accuracy</span></div>
+    </div>
+  </div>
+  <div style="padding:20px; max-width:900px; margin:0 auto;">
+    <h2>Our Features</h2>
+    <div class="card-row">
+      <div class="card" onclick="go('predict')"><div style="font-size:1.8rem;">🌱</div><h3>Crop Prediction</h3><p>Best crop recommendations based on your land, soil and season.</p></div>
+      <div class="card" onclick="go('health')"><div style="font-size:1.8rem;">🔬</div><h3>Crop Health</h3><p>Diagnose diseases from symptoms or photos. Get treatment steps.</p></div>
+      <div class="card" onclick="go('calc')"><div style="font-size:1.8rem;">🧮</div><h3>Profit Calculator</h3><p>Enter costs and yield to see your live profit or loss.</p></div>
+      <div class="card" onclick="go('market')"><div style="font-size:1.8rem;">📊</div><h3>Market Advisor</h3><p>Check mandi prices and get buy/sell recommendations.</p></div>
+      <div class="card" onclick="go('voice')"><div style="font-size:1.8rem;">🎙️</div><h3>Voice Assistant</h3><p>Ask farming questions in Hindi, Marathi or English.</p></div>
+      <div class="card" onclick="go('equip')"><div style="font-size:1.8rem;">🚜</div><h3>Equipment Sharing</h3><p>Borrow or lend tractors and farm equipment nearby.</p></div>
+    </div>
+    <h2>What Farmers Say</h2>
+    <div class="card-row">
+      <div class="card"><p><i>"Predicted soybean for me — 40% more profit this season!"</i></p><b>— Ramesh Shinde, Nashik</b></div>
+      <div class="card" style="background:#2d6a4f;color:white;border-color:#2d6a4f;"><p style="color:white;"><i>"Disease detector saved my entire tomato crop!"</i></p><b>— Priya Kumari, Pune</b></div>
+      <div class="card"><p><i>"Borrowed a tractor — saved Rs.8,000 this season!"</i></p><b>— Anil Yadav, Nagpur</b></div>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 KrishiMitra — Built for Indian Farmers &nbsp;|&nbsp;
+    <a onclick="go('predict')">Crop AI</a> <a onclick="go('market')">Market</a> <a onclick="go('equip')">Equipment</a>
+  </footer>
+</div>
+
+<!-- Crop Prediction -->
+<div id="page-predict" class="page">
+  <h1>🌱 Crop Profit Prediction</h1>
+  <p>Fill in your farm details and we will suggest the best crops to grow.</p>
+  <div class="box">
+    <h2>Farm Details</h2>
+    <div class="row3">
+      <div><label>District</label><select id="p-dist"><option value="">-- Select --</option><option>Nashik</option><option>Pune</option><option>Nagpur</option><option>Aurangabad</option><option>Solapur</option><option>Kolhapur</option></select></div>
+      <div><label>Soil Type</label><select id="p-soil"><option value="">-- Select --</option><option>Black Cotton Soil</option><option>Red Laterite Soil</option><option>Alluvial Soil</option><option>Sandy Loam</option></select></div>
+      <div><label>Water Source</label><select id="p-water"><option value="">-- Select --</option><option>Canal Irrigation</option><option>Well/Borewell</option><option>Rain-fed Only</option></select></div>
+      <div><label>Land Size (Acres)</label><input type="number" id="p-land" placeholder="e.g. 5" min="0.5" step="0.5" /></div>
+      <div><label>Season</label><select id="p-season"><option value="">-- Select --</option><option>Kharif (Jun-Oct)</option><option>Rabi (Nov-Mar)</option><option>Zaid (Apr-Jun)</option></select></div>
+    </div>
+    <button class="btn btn-green btn-full" onclick="predict()">Get Crop Recommendations</button>
+  </div>
+  <div id="pred-result" style="display:none">
+    <h2>Top 3 Recommended Crops</h2>
+    <div id="crop-cards" class="card-row"></div>
+    <div class="box" style="background:#1a3a28; color:#95d5b2;"><b>Formula:</b> Profit = (Yield x Mandi Price) - Total Cultivation Cost</div>
+  </div>
+</div>
+
+<!-- Health -->
+<div id="page-health" class="page">
+  <h1>🔬 Crop Health Assistant</h1>
+  <p>Upload a photo or select symptoms to diagnose crop disease.</p>
+  <div class="two-col">
+    <div>
+      <div class="box">
+        <h2>Upload Crop Image</h2>
+        <div style="border:2px dashed #bbb;border-radius:6px;padding:30px;text-align:center;cursor:pointer;" onclick="document.getElementById('crop-img').click()">
+          <div style="font-size:2rem;">📷</div>
+          <p style="margin:6px 0 3px;">Click to upload image</p>
+          <small style="color:#888;">JPG or PNG</small>
+          <input type="file" id="crop-img" accept="image/*" style="display:none" onchange="showPreview(event)" />
+        </div>
+        <div id="img-preview" style="display:none;margin-top:10px;"></div>
+      </div>
+      <div class="box">
+        <h2>Select Symptoms</h2>
+        <div id="symptom-chips">
+          <span class="chip" onclick="this.classList.toggle('on')">Yellow leaves</span>
+          <span class="chip" onclick="this.classList.toggle('on')">Brown spots</span>
+          <span class="chip" onclick="this.classList.toggle('on')">Wilting</span>
+          <span class="chip" onclick="this.classList.toggle('on')">White powder</span>
+          <span class="chip" onclick="this.classList.toggle('on')">Holes in leaves</span>
+          <span class="chip" onclick="this.classList.toggle('on')">Rotting stem</span>
+          <span class="chip" onclick="this.classList.toggle('on')">Stunted growth</span>
+        </div>
+        <button class="btn btn-green btn-full" onclick="diagnose()">Diagnose Now</button>
+      </div>
+    </div>
+    <div class="box" id="diag-box">
+      <h2>Diagnosis Result</h2>
+      <p style="color:#aaa;">Select symptoms above and click Diagnose.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Calculator -->
+<div id="page-calc" class="page">
+  <h1>🧮 Farm Profit Calculator</h1>
+  <p>Enter your costs and expected yield to calculate profit or loss.</p>
+  <div class="two-col">
+    <div class="box">
+      <h2>Input Costs (Rs.)</h2>
+      <table>
+        <tr><td>Seeds</td>      <td><input type="number" id="c1" placeholder="0" oninput="calcP()" /></td></tr>
+        <tr><td>Fertilizers</td><td><input type="number" id="c2" placeholder="0" oninput="calcP()" /></td></tr>
+        <tr><td>Pesticides</td> <td><input type="number" id="c3" placeholder="0" oninput="calcP()" /></td></tr>
+        <tr><td>Labour</td>     <td><input type="number" id="c4" placeholder="0" oninput="calcP()" /></td></tr>
+        <tr><td>Irrigation</td> <td><input type="number" id="c5" placeholder="0" oninput="calcP()" /></td></tr>
+        <tr><td>Machinery</td>  <td><input type="number" id="c6" placeholder="0" oninput="calcP()" /></td></tr>
+      </table>
+      <h2 style="margin-top:14px;">Expected Yield</h2>
+      <table>
+        <tr><td>Yield (kg)</td>    <td><input type="number" id="c7" placeholder="0" oninput="calcP()" /></td></tr>
+        <tr><td>Price (Rs./kg)</td><td><input type="number" id="c8" placeholder="0" oninput="calcP()" /></td></tr>
+      </table>
+    </div>
+    <div class="box">
+      <h2>Live Result</h2>
+      <div class="result-line"><span>Total Cost</span><b id="r-cost" style="color:red;">Rs.0</b></div>
+      <div class="result-line"><span>Expected Revenue</span><b id="r-rev" style="color:green;">Rs.0</b></div>
+      <div class="result-line total"><span id="r-lbl">Profit</span><b id="r-profit" style="font-size:1.3rem;">Rs.0</b></div>
+      <div id="r-adv" style="margin-top:10px;padding:8px;border-radius:6px;text-align:center;font-size:0.88rem;"></div>
+      <div style="background:#1a3a28;color:#95d5b2;padding:10px;border-radius:6px;margin-top:12px;"><b>Formula:</b> Profit = (Yield x Price) - Cost</div>
+    </div>
+  </div>
+</div>
+
+<!-- Market -->
+<div id="page-market" class="page">
+  <h1>📊 Smart Market Advisor</h1>
+  <p>Check mandi prices and get sell or wait recommendations.</p>
+  <div class="box">
+    <div class="row2">
+      <div><label>Crop</label><select id="mk-crop" onchange="loadMarket()"><option value="wheat">Wheat</option><option value="rice">Rice</option><option value="soybean">Soybean</option><option value="cotton">Cotton</option><option value="tomato">Tomato</option></select></div>
+      <div><label>District</label><select id="mk-dist" onchange="loadMarket()"><option>Nashik</option><option>Pune</option><option>Nagpur</option></select></div>
+    </div>
+  </div>
+  <div class="banner" id="mkt-banner">
+    <div><strong id="mkt-verdict">SELL NOW</strong><p id="mkt-reason">Price is above average. Sell immediately!</p></div>
+    <div style="text-align:right;"><small style="opacity:0.7;">Today's Price</small><div id="mkt-price" style="font-size:1.8rem;font-weight:bold;">Rs.270/q</div></div>
+  </div>
+  <div class="box"><h2>Weekly Price Trend</h2><div style="height:220px;"><canvas id="price-chart"></canvas></div></div>
+  <div class="box"><h2>Nearby Mandis</h2><table><tr><th>Mandi</th><th>District</th><th>Price</th><th>Status</th></tr><tbody id="mandi-table"></tbody></table></div>
+</div>
+
+<!-- Voice -->
+<div id="page-voice" class="page">
+  <h1>🎙️ Voice Assistant</h1>
+  <p>Ask any farming question by voice or text in Hindi, Marathi, or English.</p>
+  <div class="two-col">
+    <div class="box">
+      <h2>Language</h2>
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <button class="btn btn-green" id="lang-hi" onclick="setLang('hi',this)">Hindi</button>
+        <button class="btn btn-white" id="lang-mr" onclick="setLang('mr',this)">Marathi</button>
+        <button class="btn btn-white" id="lang-en" onclick="setLang('en',this)">English</button>
+      </div>
+      <div style="text-align:center;margin-bottom:14px;">
+        <button id="orb" class="btn btn-green" style="width:80px;height:80px;border-radius:50%;font-size:1.7rem;padding:0;" onclick="toggleVoice()">🎤</button>
+        <p id="orb-status" style="font-size:0.85rem;color:#555;margin-top:6px;">Tap to speak</p>
+      </div>
+      <h3 style="font-size:0.9rem;margin-bottom:8px;">Quick Questions</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+        <button class="btn btn-white" style="font-size:0.78rem;padding:6px;" onclick="qAsk(this)">Which crop to plant?</button>
+        <button class="btn btn-white" style="font-size:0.78rem;padding:6px;" onclick="qAsk(this)">Best time to sell?</button>
+        <button class="btn btn-white" style="font-size:0.78rem;padding:6px;" onclick="qAsk(this)">Disease treatment?</button>
+        <button class="btn btn-white" style="font-size:0.78rem;padding:6px;" onclick="qAsk(this)">Mandi prices today?</button>
+        <button class="btn btn-white" style="font-size:0.78rem;padding:6px;" onclick="qAsk(this)">Fertilizer dosage?</button>
+        <button class="btn btn-white" style="font-size:0.78rem;padding:6px;" onclick="qAsk(this)">Weather forecast?</button>
+      </div>
+    </div>
+    <div class="box">
+      <h2>Chat</h2>
+      <div class="chat-area" id="chat-box">
+        <div class="msg"><span>Bot</span><div class="bubble">Hello! Ask me anything about farming.</div></div>
+      </div>
+      <div class="chat-row">
+        <input type="text" id="chat-input" placeholder="Type your question..." onkeydown="if(event.key==='Enter') sendMsg()" />
+        <button class="btn btn-green" onclick="sendMsg()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Equipment -->
+<div id="page-equip" class="page">
+  <h1>🚜 Equipment Sharing</h1>
+  <p>Borrow or lend farm equipment with nearby farmers.</p>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
+    <button class="btn btn-green" onclick="openModal('list-modal')">+ List My Equipment</button>
+    <input type="text" id="eq-search" placeholder="Search equipment..." style="max-width:240px;" oninput="renderEq()" />
+    <select id="eq-filter" onchange="renderEq()" style="max-width:160px;"><option value="all">All Types</option><option>Tractor</option><option>Harvester</option><option>Sprayer</option><option>Thresher</option></select>
+  </div>
+  <div id="eq-grid" class="card-row"></div>
+  <div class="modal-bg" id="list-modal">
+    <div class="modal">
+      <button class="close-btn" onclick="closeModal('list-modal')">X</button>
+      <h2>List Your Equipment</h2>
+      <div class="row2">
+        <div><label>Equipment Type</label><select id="em-type"><option>Tractor</option><option>Harvester</option><option>Sprayer</option><option>Thresher</option></select></div>
+        <div><label>Your Name</label><input type="text" id="em-name" placeholder="Farmer name" /></div>
+        <div><label>Village / Town</label><input type="text" id="em-loc" placeholder="Location" /></div>
+        <div><label>Rent (Rs./day)</label><input type="number" id="em-rent" placeholder="500" /></div>
+        <div><label>Phone</label><input type="tel" id="em-phone" placeholder="9XXXXXXXXX" /></div>
+        <div><label>Condition</label><select id="em-cond"><option>Excellent</option><option>Good</option><option>Fair</option></select></div>
+      </div>
+      <button class="btn btn-green btn-full" onclick="listEquip()">Submit Listing</button>
+    </div>
+  </div>
+  <div class="modal-bg" id="req-modal">
+    <div class="modal">
+      <button class="close-btn" onclick="closeModal('req-modal')">X</button>
+      <h2>Request Equipment</h2>
+      <p id="req-item-name" style="color:#2d6a4f;font-weight:bold;"></p>
+      <div class="row2">
+        <div><label>Your Name</label><input type="text" id="rq-name" placeholder="Your name" /></div>
+        <div><label>From Date</label><input type="date" id="rq-date" /></div>
+        <div><label>No. of Days</label><input type="number" id="rq-days" placeholder="3" /></div>
+        <div><label>Your Phone</label><input type="tel" id="rq-phone" placeholder="9XXXXXXXXX" /></div>
+      </div>
+      <button class="btn btn-green btn-full" onclick="sendRequest()">Send Request</button>
+    </div>
+  </div>
+</div>
+
+<!-- Login -->
+<div id="page-login" class="page" style="padding:0;max-width:100%;">
+  <div class="auth-wrap">
+    <div class="auth-left">
+      <h2>Welcome back, Kisan Ji!</h2>
+      <p>Sign in to access crop predictions and farm insights.</p>
+      <ul><li>Crop Profit Prediction</li><li>Live Market Prices</li><li>AI Disease Detection</li><li>Equipment Network</li></ul>
+    </div>
+    <div class="auth-right">
+      <h2>Sign In</h2>
+      <p>No account? <span class="auth-link" onclick="go('register')">Register free</span></p>
+      <label>Email</label><input type="text" id="l-email" placeholder="farmer@krishi.com" />
+      <label>Password</label><input type="password" id="l-pass" placeholder="Password" />
+      <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin:8px 0;">
+        <label><input type="checkbox" /> Remember me</label>
+        <span class="auth-link" onclick="toast('Reset link sent!')">Forgot password?</span>
+      </div>
+      <button class="btn btn-green btn-full" onclick="doLogin()">Sign In</button>
+      <div class="demo-box">Demo: <b>farmer@krishi.com</b> / <b>krishi123</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- Register -->
+<div id="page-register" class="page" style="padding:0;max-width:100%;">
+  <div class="auth-wrap">
+    <div class="auth-left" style="background:#1b4332;">
+      <h2>Join 12,000+ Smart Farmers</h2>
+      <p>Create your free account and start making better farming decisions.</p>
+      <ul><li>100% Free</li><li>Hindi and Marathi support</li><li>Your data is private</li></ul>
+    </div>
+    <div class="auth-right">
+      <h2>Create Account</h2>
+      <p>Already registered? <span class="auth-link" onclick="go('login')">Sign in</span></p>
+      <div class="row2">
+        <div><label>First Name</label><input type="text" id="r-fn" placeholder="First name" /></div>
+        <div><label>Last Name</label><input type="text" id="r-ln" placeholder="Last name" /></div>
+        <div><label>Email</label><input type="email" id="r-email" placeholder="your@email.com" /></div>
+        <div><label>Phone</label><input type="tel" id="r-phone" placeholder="9XXXXXXXXX" /></div>
+        <div><label>District</label><select id="r-dist"><option value="">Select</option><option>Nashik</option><option>Pune</option><option>Nagpur</option></select></div>
+        <div><label>Land (acres)</label><input type="number" id="r-land" placeholder="5" /></div>
+      </div>
+      <label>Password</label><input type="password" id="r-pass" placeholder="Min. 6 characters" />
+      <button class="btn btn-green btn-full" onclick="doRegister()">Create Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- Profile -->
+<div id="page-profile" class="page">
+  <h1>My Profile</h1>
+  <div class="two-col">
+    <div>
+      <div class="box" style="text-align:center;">
+        <div id="p-avatar" style="width:65px;height:65px;background:#2d6a4f;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:bold;margin:0 auto 10px;">R</div>
+        <h3 id="p-name" style="margin:0;">Ramesh Shinde</h3>
+        <p style="color:#888;margin:3px 0 10px;" id="p-email">farmer@krishi.com</p>
+        <div style="display:flex;justify-content:space-around;border-top:1px solid #eee;padding-top:10px;">
+          <div><b id="p-npred" style="color:#2d6a4f;">0</b><br/><small>Predictions</small></div>
+          <div><b id="p-ndiag" style="color:#2d6a4f;">0</b><br/><small>Diagnoses</small></div>
+          <div><b id="p-ncalc" style="color:#2d6a4f;">0</b><br/><small>Calcs</small></div>
+        </div>
+      </div>
+      <div class="box" style="margin-top:12px;">
+        <h2>Farm Info</h2>
+        <table>
+          <tr><td>District</td><td id="pi-dist">-</td></tr>
+          <tr><td>Crop</td>    <td id="pi-crop">-</td></tr>
+          <tr><td>Land</td>    <td id="pi-land">-</td></tr>
+          <tr><td>Phone</td>   <td id="pi-phone">-</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="box">
+      <h2>Activity Log</h2>
+      <div id="activity-log"><p style="color:#aaa;">No activity yet. Start using the tools!</p></div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-green" onclick="go('predict')">Predict Crop</button>
+        <button class="btn btn-white" onclick="go('health')">Health Check</button>
+        <button class="btn btn-white" onclick="go('calc')">Calculator</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Our JavaScript -->
+<script src="app.js"></script>
+
+</body>
+</html>
