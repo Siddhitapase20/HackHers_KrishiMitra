@@ -1,0 +1,65 @@
+<div id="page-predict" class="page">
+  <h1>🌱 Crop Profit Prediction</h1>
+  <p>Fill in your farm details and we will suggest the best crops to grow.</p>
+
+  <!-- INPUT FORM -->
+  <div class="box">
+    <h2>Farm Details</h2>
+    <div class="row3">
+      <div>
+        <label>District</label>
+        <select id="p-dist">
+          <option value="">-- Select --</option>
+          <option>Nashik</option>
+          <option>Pune</option>
+          <option>Nagpur</option>
+          <option>Aurangabad</option>
+          <option>Solapur</option>
+          <option>Kolhapur</option>
+        </select>
+      </div>
+      <div>
+        <label>Soil Type</label>
+        <select id="p-soil">
+          <option value="">-- Select --</option>
+          <option>Black Cotton Soil</option>
+          <option>Red Laterite Soil</option>
+          <option>Alluvial Soil</option>
+          <option>Sandy Loam</option>
+        </select>
+      </div>
+      <div>
+        <label>Water Source</label>
+        <select id="p-water">
+          <option value="">-- Select --</option>
+          <option>Canal Irrigation</option>
+          <option>Well/Borewell</option>
+          <option>Rain-fed Only</option>
+        </select>
+      </div>
+      <div>
+        <label>Land Size (Acres)</label>
+        <input type="number" id="p-land" placeholder="e.g. 5" min="0.5" step="0.5" />
+      </div>
+      <div>
+        <label>Season</label>
+        <select id="p-season">
+          <option value="">-- Select --</option>
+          <option>Kharif (Jun-Oct)</option>
+          <option>Rabi (Nov-Mar)</option>
+          <option>Zaid (Apr-Jun)</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-green btn-full" onclick="predict()">Get Crop Recommendations</button>
+  </div>
+
+  <!-- RESULTS — shown after clicking button (filled by JS) -->
+  <div id="pred-result" style="display:none">
+    <h2>Top 3 Recommended Crops</h2>
+    <div id="crop-cards" class="card-row"></div>
+    <div class="box" style="background:#1a3a28; color:#95d5b2;">
+      <b>Formula:</b> Profit = (Yield x Mandi Price) - Total Cultivation Cost
+    </div>
+  </div>
+</div>
